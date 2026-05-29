@@ -1,0 +1,5 @@
+myenv/
+eco_metric/eco_met/__pycache__
+eco_metric/eco_met/migrations/__pycache__
+eco_metric/eco_met/utils/__pycache__
+eco_metric/eco_metric/__pycache__

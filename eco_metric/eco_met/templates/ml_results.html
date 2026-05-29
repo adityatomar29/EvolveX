@@ -1,0 +1,311 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+<title>ML Carbon Result | Catalyst</title>
+
+<link rel="stylesheet" href="{% static 'css/home.css' %}">
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700&display=swap" rel="stylesheet">
+
+<style>
+
+/* SAME DESIGN SYSTEM */
+
+.result-container{
+margin-top:40px;
+display:flex;
+gap:40px;
+flex-wrap:wrap;
+}
+
+.result-card{
+background:#111827;
+padding:30px;
+border-radius:16px;
+box-shadow:0 10px 25px rgba(0,0,0,0.3);
+flex:1;
+min-width:350px;
+}
+
+.result-card h2{
+margin-bottom:15px;
+}
+
+.footprint-value{
+font-size:48px;
+font-weight:700;
+color:#36d399;
+margin-bottom:10px;
+}
+
+.eco-score{
+font-size:22px;
+margin-bottom:20px;
+}
+
+.recommendations{
+margin-top:20px;
+}
+
+.recommendations li{
+margin-bottom:10px;
+padding:10px;
+border-left:4px solid #36d399;
+background:#1f2937;
+border-radius:6px;
+}
+
+.reduction-box{
+margin-top:20px;
+padding:15px;
+background:#064e3b;
+border-radius:10px;
+}
+
+.actions{
+margin-top:25px;
+}
+
+.actions button{
+padding:10px 20px;
+border:none;
+border-radius:8px;
+cursor:pointer;
+margin-right:10px;
+}
+
+.actions .recalc{
+background:#36d399;
+color:#000;
+}
+
+.actions .dashboard{
+background:#2563eb;
+color:#fff;
+}
+
+.breakdown{
+display:grid;
+grid-template-columns:repeat(2,1fr);
+gap:15px;
+margin-top:20px;
+}
+
+.breakdown-card{
+background:#1f2937;
+padding:15px;
+border-radius:10px;
+text-align:center;
+}
+
+.fade-in {
+opacity: 0;
+transform: translateY(30px);
+animation: fadeInUp 0.9s ease forwards;
+}
+
+.fade-delay-1 { animation-delay: 0.2s; }
+.fade-delay-2 { animation-delay: 0.4s; }
+.fade-delay-3 { animation-delay: 0.6s; }
+
+@keyframes fadeInUp {
+from {
+opacity: 0;
+transform: translateY(30px);
+}
+to {
+opacity: 1;
+transform: translateY(0);
+}
+}
+
+</style>
+
+</head>
+
+<body>
+
+<!-- NAVBAR -->
+
+<header class="navbar">
+<div class="logo">
+<img src="https://cdn-icons-png.flaticon.com/512/616/616408.png">
+<span>Catalyst</span>
+<a href="/" class="btn" style="color:#36d399;">Logout</a>
+</div>
+
+<nav class="nav-links">
+<a href="/home">Home</a>
+<a href="/calculate">Personal Tracker</a>
+<a href="/simulate_ml_run">Software/ML Tracker</a>
+<a href="/dashboard">Dashboard</a>
+</nav>
+
+<div class="profile">
+<div class="circle">M</div>
+</div>
+
+<div class="menu-toggle">&#9776;</div>
+</header>
+
+
+<!-- MAIN -->
+
+<main class="container">
+
+<section class="content">
+
+<p class="tagline">ML IMPACT REPORT</p>
+
+<h1 class="fade-in">Your <span>ML Carbon Footprint</span></h1>
+
+<p class="desc">
+Analyze the environmental impact of your machine learning models and optimize efficiency.
+</p>
+
+<div class="result-container">
+
+<!-- LEFT CARD -->
+
+<div class="result-card fade-in fade-delay-1">
+
+<h2>Total ML Emission</h2>
+
+<div class="footprint-value">
+{{ total_emission }} kg CO₂
+</div>
+
+<div class="eco-score">
+Efficiency Score: <b>{{ eco_score }}/100</b>
+</div>
+
+<div class="reduction-box">
+⚡ Possible Reduction: <b>{{ reduction }} kg CO₂</b>
+</div>
+
+<div class="actions">
+
+<button class="recalc" onclick="location.href='/simulate_ml_run'">
+Recalculate
+</button>
+
+<button class="dashboard" onclick="location.href='/dashboard'">
+View Dashboard
+</button>
+
+</div>
+
+</div>
+
+
+<!-- RIGHT CARD -->
+
+<div class="result-card fade-in fade-delay-2">
+
+<h2>Model Details</h2>
+
+<div class="breakdown">
+
+<div class="breakdown-card">
+<h4>Model</h4>
+<p>{{ model_name }}</p>
+</div>
+
+<div class="breakdown-card">
+<h4>Hardware</h4>
+<p>{{ hardware }}</p>
+</div>
+
+<div class="breakdown-card">
+<h4>Training Time</h4>
+<p>{{ training_time }} hrs</p>
+</div>
+
+<div class="breakdown-card">
+<h4>Energy Used</h4>
+<p>{{ energy }} kWh</p>
+</div>
+
+</div>
+
+</div>
+
+</div>
+
+
+<!-- AI RECOMMENDATIONS -->
+
+<div class="result-card fade-in fade-delay-3">
+
+<h2>🤖 Smart ML Optimization Tips</h2>
+
+<ul class="recommendations">
+
+{% for rec in recommendations %}
+<li>{{ rec }}</li>
+{% endfor %}
+
+</ul>
+
+</div>
+
+</section>
+
+
+<!-- SIDE PANEL -->
+
+<aside class="dashboard">
+
+<div class="card">
+
+<h3>
+<img src="https://cdn-icons-png.flaticon.com/512/616/616408.png">
+ML Dashboard
+</h3>
+
+<p class="date">Today</p>
+
+<div class="progress">
+
+<div class="label">
+<span>Model Emission</span>
+<span>{{ total_emission }} kg CO₂</span>
+</div>
+
+<div class="bar">
+<div class="fill" style="width:75%"></div>
+</div>
+
+</div>
+
+</div>
+
+</aside>
+
+</main>
+
+
+<!-- FOOTER -->
+
+<footer class="footer">
+<p>© 2026 Catalyst. AI • Optimize • Sustain.</p>
+</footer>
+
+
+<script>
+
+// Mobile menu toggle
+const toggle=document.querySelector(".menu-toggle")
+const nav=document.querySelector(".nav-links")
+
+toggle.addEventListener("click",()=>{
+nav.classList.toggle("active")
+})
+
+</script>
+
+</body>
+</html>
