@@ -42,6 +42,15 @@ http://127.0.0.1:8000
 - Improving energy efficiency
 
 
+User Information:
+- Username: aditomar29
+- Password: 292917
+
+Super User (admin) Information:
+- User: aditya29
+- Passsword: Tomar@2906
+
+
 👨‍💻 Author
 
 Aditya Tomar
