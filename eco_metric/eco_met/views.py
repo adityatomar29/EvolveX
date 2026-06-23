@@ -20,7 +20,7 @@ from .utils.ml_recommendation_engine import generate_ml_recommendations
 
 # Create your views here.
 def index(request):
-    return render(request, 'landing.html')
+    return render(request, 'landing2.html')
 
 def auth(request):
     """
