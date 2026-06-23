@@ -1,0 +1,675 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Welcome to EvolveX</title>
+
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600;700;800&display=swap" rel="stylesheet">
+
+<style>
+*{
+    margin:0;
+    padding:0;
+    box-sizing:border-box;
+    font-family:'Inter',sans-serif;
+}
+
+html{
+    scroll-behavior:smooth;
+}
+
+body{
+    background:#0f172a;
+    color:white;
+    overflow-x:hidden;
+}
+
+/* ================= NAVBAR ================= */
+
+.navbar{
+    position:fixed;
+    top:0;
+    width:100%;
+    z-index:1000;
+    display:flex;
+    justify-content:space-between;
+    align-items:center;
+    padding:18px 7%;
+    background:rgba(15,23,42,.95);
+    backdrop-filter:blur(10px);
+    border-bottom:1px solid rgba(255,255,255,.08);
+}
+
+.logo{
+    display:flex;
+    align-items:center;
+    gap:12px;
+}
+
+.logo img{
+    width:42px;
+}
+
+.logo span{
+    font-size:1.6rem;
+    font-weight:700;
+    color:#36d399;
+}
+
+.nav-links{
+    display:flex;
+    gap:30px;
+}
+
+.nav-links a{
+    text-decoration:none;
+    color:white;
+    font-weight:500;
+    transition:.3s;
+}
+
+.nav-links a:hover{
+    color:#36d399;
+}
+
+.menu-toggle{
+    display:none;
+    font-size:28px;
+    cursor:pointer;
+}
+
+/* ================= HERO ================= */
+
+.hero{
+    min-height:100vh;
+    display:flex;
+    align-items:center;
+    justify-content:center;
+    text-align:center;
+    padding:120px 8% 80px;
+    background:
+    linear-gradient(rgba(0,0,0,.55),rgba(0,0,0,.55)),
+    url("https://images.unsplash.com/photo-1441974231531-c6227db76b6e?auto=format&fit=crop&w=1600&q=80");
+    background-size:cover;
+    background-position:center;
+}
+
+.hero-content{
+    max-width:900px;
+}
+
+.hero h1{
+    font-size:4rem;
+    margin-bottom:20px;
+    line-height:1.2;
+}
+
+.hero span{
+    color:#36d399;
+}
+
+.hero p{
+    font-size:1.15rem;
+    line-height:1.8;
+    color:#d1d5db;
+    margin-bottom:35px;
+}
+
+.btn{
+    padding:15px 35px;
+    border:none;
+    border-radius:50px;
+    background:#36d399;
+    color:#0f172a;
+    font-size:1rem;
+    font-weight:700;
+    cursor:pointer;
+    transition:.3s;
+}
+
+.btn:hover{
+    transform:translateY(-4px);
+}
+
+/* ================= SLIDER ================= */
+
+.slider-section{
+    padding:90px 7%;
+}
+
+.section-title{
+    text-align:center;
+    margin-bottom:40px;
+    font-size:2.5rem;
+}
+
+.slider{
+    position:relative;
+    height:450px;
+    overflow:hidden;
+    border-radius:25px;
+}
+
+.slide{
+    position:absolute;
+    width:100%;
+    height:100%;
+    opacity:0;
+    transition:1s;
+}
+
+.slide.active{
+    opacity:1;
+}
+
+.slide img{
+    width:100%;
+    height:100%;
+    object-fit:cover;
+}
+
+.slide-content{
+    position:absolute;
+    left:50px;
+    bottom:50px;
+    background:rgba(0,0,0,.6);
+    padding:20px;
+    border-radius:15px;
+}
+
+.slide-content h2{
+    color:#36d399;
+    margin-bottom:10px;
+}
+
+/* ================= AWARENESS CARDS ================= */
+
+.awareness{
+    padding:90px 7%;
+}
+
+.cards{
+    display:grid;
+    grid-template-columns:repeat(auto-fit,minmax(280px,1fr));
+    gap:30px;
+}
+
+.card{
+    background:#1e293b;
+    padding:30px;
+    border-radius:20px;
+    transition:.4s;
+}
+
+.card:hover{
+    transform:translateY(-10px);
+}
+
+.card h3{
+    margin-bottom:15px;
+    color:#36d399;
+}
+
+.card p{
+    color:#cbd5e1;
+    line-height:1.8;
+}
+
+/* ================= STATS ================= */
+
+.stats{
+    padding:90px 7%;
+}
+
+.stats-container{
+    display:grid;
+    grid-template-columns:repeat(auto-fit,minmax(250px,1fr));
+    gap:25px;
+}
+
+.stat-box{
+    text-align:center;
+    background:#1e293b;
+    padding:35px;
+    border-radius:20px;
+}
+
+.stat-box h2{
+    color:#36d399;
+    font-size:2.8rem;
+    margin-bottom:10px;
+}
+
+/* ================= GALLERY ================= */
+
+.gallery{
+    padding:90px 7%;
+}
+
+.gallery-grid{
+    display:grid;
+    grid-template-columns:repeat(auto-fit,minmax(300px,1fr));
+    gap:20px;
+}
+
+.gallery-grid img{
+    width:100%;
+    height:260px;
+    object-fit:cover;
+    border-radius:20px;
+    transition:.4s;
+}
+
+.gallery-grid img:hover{
+    transform:scale(1.05);
+}
+
+/* ================= CTA ================= */
+
+.cta{
+    padding:100px 7%;
+    text-align:center;
+}
+
+.cta-box{
+    background:linear-gradient(135deg,#36d399,#10b981);
+    color:#0f172a;
+    padding:60px;
+    border-radius:25px;
+}
+
+.cta-box h2{
+    font-size:2.5rem;
+    margin-bottom:20px;
+}
+
+.cta-box p{
+    margin-bottom:30px;
+    font-size:1.1rem;
+}
+
+/* ================= FOOTER ================= */
+
+.footer{
+    text-align:center;
+    padding:25px;
+    background:#020617;
+    border-top:1px solid rgba(255,255,255,.08);
+}
+
+/* ================= ANIMATION ================= */
+
+/* ================= PAGE LOAD ANIMATIONS ================= */
+
+.hero-content{
+    animation: fadeUp 1.2s ease forwards;
+}
+
+.navbar{
+    animation: slideDown 0.8s ease;
+}
+
+.section-title{
+    animation: fadeIn 1.2s ease;
+}
+
+/* Cards Animation */
+.card,
+.stat-box,
+.gallery-grid img{
+    opacity:0;
+    transform:translateY(40px);
+    transition:all .8s ease;
+}
+
+.card.show,
+.stat-box.show,
+.gallery-grid img.show{
+    opacity:1;
+    transform:translateY(0);
+}
+
+.card:nth-child(1){transition-delay:.1s;}
+.card:nth-child(2){transition-delay:.2s;}
+.card:nth-child(3){transition-delay:.3s;}
+.card:nth-child(4){transition-delay:.4s;}
+
+.stat-box:nth-child(1){transition-delay:.1s;}
+.stat-box:nth-child(2){transition-delay:.2s;}
+.stat-box:nth-child(3){transition-delay:.3s;}
+.stat-box:nth-child(4){transition-delay:.4s;}
+
+/* Floating Button Effect */
+.btn{
+    animation: floatButton 3s ease-in-out infinite;
+}
+
+.btn:hover{
+    transform:translateY(-6px) scale(1.03);
+    box-shadow:0 10px 25px rgba(54,211,153,.3);
+}
+
+/* Logo Animation */
+.logo img{
+    animation: rotateLeaf 8s linear infinite;
+}
+
+/* Hero Background Zoom */
+.hero{
+    animation: heroZoom 15s ease-in-out infinite alternate;
+}
+
+/* Keyframes */
+
+@keyframes fadeUp{
+    from{
+        opacity:0;
+        transform:translateY(50px);
+    }
+    to{
+        opacity:1;
+        transform:translateY(0);
+    }
+}
+
+@keyframes fadeIn{
+    from{
+        opacity:0;
+    }
+    to{
+        opacity:1;
+    }
+}
+
+@keyframes slideDown{
+    from{
+        opacity:0;
+        transform:translateY(-50px);
+    }
+    to{
+        opacity:1;
+        transform:translateY(0);
+    }
+}
+
+@keyframes floatButton{
+    0%,100%{
+        transform:translateY(0);
+    }
+    50%{
+        transform:translateY(-5px);
+    }
+}
+
+@keyframes rotateLeaf{
+    0%{
+        transform:rotate(0deg);
+    }
+    100%{
+        transform:rotate(360deg);
+    }
+}
+
+@keyframes heroZoom{
+    from{
+        background-size:100%;
+    }
+    to{
+        background-size:110%;
+    }
+}
+
+/* ================= MOBILE ================= */
+
+@media(max-width:768px){
+
+.hero h1{
+    font-size:2.6rem;
+}
+
+.nav-links{
+    position:absolute;
+    top:80px;
+    right:-100%;
+    width:250px;
+    background:#1e293b;
+    flex-direction:column;
+    padding:20px;
+    transition:.4s;
+}
+
+.nav-links.active{
+    right:20px;
+}
+
+.menu-toggle{
+    display:block;
+}
+
+.slider{
+    height:300px;
+}
+
+.slide-content{
+    left:20px;
+    right:20px;
+    bottom:20px;
+}
+}
+</style>
+</head>
+
+<body>
+
+<header class="navbar">
+    <div class="logo">
+        <img src="{% static 'images/Logo.png' %}" alt="EvolveX Logo">
+        <span>EvolveX</span>
+    </div>
+
+    <nav class="nav-links">
+        <a href="#awareness">Awareness</a>
+        <a href="#stats">Impact</a>
+        <a href="#gallery">Gallery</a>
+        <a href="#cta">Join</a>
+    </nav>
+
+    <div class="menu-toggle">&#9776;</div>
+</header>
+
+<!-- HERO -->
+
+<section class="hero">
+    <div class="hero-content">
+        <h1>Together We Can <span>Protect Our Planet</span></h1>
+
+        <p>
+            Climate change is one of the greatest challenges of our time.
+            Small actions taken by millions of people can create a significant
+            positive impact on the environment and future generations.
+        </p>
+
+        <button class="btn" onclick="location.href='/home'">
+            Enter Our Platform →
+        </button>
+    </div>
+</section>
+
+<!-- SLIDER -->
+
+<section class="slider-section">
+    <h2 class="section-title">Why Environmental Action Matters</h2>
+
+    <div class="slider">
+
+        <div class="slide active">
+            <img src="https://images.unsplash.com/photo-1473773508845-188df298d2d1?auto=format&fit=crop&w=1600&q=80">
+            <div class="slide-content">
+                <h2>Protect Forests</h2>
+                <p>Forests absorb billions of tons of carbon dioxide every year.</p>
+            </div>
+        </div>
+
+        <div class="slide">
+            <img src="https://images.unsplash.com/photo-1497436072909-60f360e1d4b1?auto=format&fit=crop&w=1600&q=80">
+            <div class="slide-content">
+                <h2>Clean Energy</h2>
+                <p>Renewable energy reduces dependence on fossil fuels.</p>
+            </div>
+        </div>
+
+        <div class="slide">
+            <img src="https://images.unsplash.com/photo-1500530855697-b586d89ba3ee?auto=format&fit=crop&w=1600&q=80">
+            <div class="slide-content">
+                <h2>Sustainable Future</h2>
+                <p>Every action today helps secure tomorrow's world.</p>
+            </div>
+        </div>
+
+    </div>
+</section>
+
+<!-- AWARENESS -->
+
+<section class="awareness" id="awareness">
+    <h2 class="section-title">Environmental Awareness</h2>
+
+    <div class="cards">
+
+        <div class="card">
+            <h3>🌳 Plant More Trees</h3>
+            <p>Trees improve air quality, store carbon and support biodiversity.</p>
+        </div>
+
+        <div class="card">
+            <h3>♻ Reduce Waste</h3>
+            <p>Reuse and recycle materials to reduce landfill and pollution.</p>
+        </div>
+
+        <div class="card">
+            <h3>🚲 Sustainable Transport</h3>
+            <p>Walk, cycle or use public transport to reduce emissions.</p>
+        </div>
+
+        <div class="card">
+            <h3>💧 Save Water</h3>
+            <p>Water conservation protects ecosystems and natural resources.</p>
+        </div>
+
+    </div>
+</section>
+
+<!-- STATS -->
+
+<section class="stats" id="stats">
+    <h2 class="section-title">Global Impact Facts</h2>
+
+    <div class="stats-container">
+
+        <div class="stat-box">
+            <h2>8M+</h2>
+            <p>Tons of plastic enter oceans annually.</p>
+        </div>
+
+        <div class="stat-box">
+            <h2>31%</h2>
+            <p>Global emissions come from energy production.</p>
+        </div>
+
+        <div class="stat-box">
+            <h2>15B</h2>
+            <p>Trees are cut down every year worldwide.</p>
+        </div>
+
+        <div class="stat-box">
+            <h2>70%</h2>
+            <p>Earth is covered by water, yet freshwater is limited.</p>
+        </div>
+
+    </div>
+</section>
+
+<!-- GALLERY -->
+
+<section class="gallery" id="gallery">
+    <h2 class="section-title">Nature Gallery</h2>
+
+    <div class="gallery-grid">
+
+        <img src="https://images.unsplash.com/photo-1506744038136-46273834b3fb?auto=format&fit=crop&w=800&q=80">
+
+        <img src="https://images.unsplash.com/photo-1441974231531-c6227db76b6e?auto=format&fit=crop&w=800&q=80">
+
+        <img src="https://images.unsplash.com/photo-1470770903676-69b98201ea1c?auto=format&fit=crop&w=800&q=80">
+
+        <img src="https://images.unsplash.com/photo-1500534314209-a25ddb2bd429?auto=format&fit=crop&w=800&q=80">
+
+        <img src="https://images.unsplash.com/photo-1465146344425-f00d5f5c8f07?auto=format&fit=crop&w=800&q=80">
+
+        <img src="https://images.unsplash.com/photo-1502082553048-f009c37129b9?auto=format&fit=crop&w=800&q=80">
+
+    </div>
+</section>
+
+<!-- CTA -->
+
+<section class="cta" id="cta">
+    <div class="cta-box">
+        <h2>Measure Your Environmental Impact</h2>
+        <p>
+            Track personal, software and machine learning carbon emissions
+            with Catalyst's intelligent sustainability platform.
+        </p>
+
+        <button class="btn" onclick="location.href='/home'">
+            Go To Main Website
+        </button>
+    </div>
+</section>
+
+<footer class="footer">
+    <p>© 2026 EvolveX • Track • Reduce • Improve</p>
+</footer>
+
+<script>
+
+const toggle=document.querySelector('.menu-toggle');
+const nav=document.querySelector('.nav-links');
+
+toggle.addEventListener('click',()=>{
+    nav.classList.toggle('active');
+});
+
+/* Scroll Reveal Animation */
+
+const observer = new IntersectionObserver((entries)=>{
+    entries.forEach(entry=>{
+        if(entry.isIntersecting){
+            entry.target.classList.add("show");
+        }
+    });
+},{
+    threshold:0.15
+});
+
+document.querySelectorAll(
+'.card, .stat-box, .gallery-grid img'
+).forEach(el=>{
+    observer.observe(el);
+});
+
+let slides=document.querySelectorAll('.slide');
+let index=0;
+
+setInterval(()=>{
+    slides[index].classList.remove('active');
+    index=(index+1)%slides.length;
+    slides[index].classList.add('active');
+},4000);
+
+</script>
+
+</body>
+</html>
