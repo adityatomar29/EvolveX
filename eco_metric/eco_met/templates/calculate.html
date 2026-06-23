@@ -1,3 +1,4 @@
+{% load static %}
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -37,7 +38,7 @@
 .logo img {
   width: 26px;
   height: 26px;
-  filter: brightness(0) saturate(100%) invert(67%) sepia(88%) saturate(334%) hue-rotate(92deg) brightness(101%) contrast(90%);
+  /* filter: brightness(0) saturate(100%) invert(67%) sepia(88%) saturate(334%) hue-rotate(92deg) brightness(101%) contrast(90%); */
 }
 
 .nav-links {
@@ -234,9 +235,9 @@
 <body>
       <header class="navbar1">
     <div class="logo">
-      <img src="https://cdn-icons-png.flaticon.com/512/616/616408.png" alt="Carbo Logo">
-      <span>Catalyst</span>
-      <a href="/" class="btn" style="color: #36d399;">Logout</a>
+      <img src="{% static 'images/Logo.png' %}" alt="Catalyst Logo">
+      <span>EvolveX</span>
+      <a href="/" class="btn" style="color: #36d399;">Main</a>
     </div>
     <nav class="nav-links">
       <a href="/home">Home</a>
@@ -246,9 +247,9 @@
       <a href="/simulate_ml_run">Software/ML Tracker</a>
       <a href="/dashboard">Dashboard</a>
     </nav>
-    <div class="profile">
+    <!-- <div class="profile">
       <div class="circle">F</div>
-    </div>
+    </div> -->
     <div class="menu-toggle">&#9776;</div>
   </header>
 
@@ -364,7 +365,7 @@
 </div>
 
     <footer class="footer">
-    <p>© 2026 Catalyst. Track • Reduce • Improve.</p>
+    <p>© 2026 EvolveX. Track • Reduce • Improve.</p>
   </footer>
 
     <script>

@@ -2,18 +2,489 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title> {% block title %}Catalyst - Track Your Carbon Footprint {% endblock %}</title>
-  <link rel="stylesheet" href="{% static 'css/home.css' %}" />
-  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700&display=swap" rel="stylesheet">
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+<title>{% block title %}EvolveX - Track Your Carbon Footprint{% endblock %}</title>
+
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700&display=swap" rel="stylesheet">
+
+<style>
+
+/* ================= RESET ================= */
+
+*{
+    margin:0;
+    padding:0;
+    box-sizing:border-box;
+    font-family:'Inter',sans-serif;
+}
+
+html{
+    scroll-behavior:smooth;
+}
+
+body{
+    background:linear-gradient(135deg,#0b1523,#111c2e);
+    color:#fff;
+    min-height:100vh;
+    overflow-x:hidden;
+}
+
+/* ================= PRELOADER ================= */
+
+.preloader{
+    position:fixed;
+    inset:0;
+    background:#0b1523;
+    display:flex;
+    justify-content:center;
+    align-items:center;
+    z-index:99999;
+    transition:all .8s ease;
+}
+
+.preloader.hide{
+    opacity:0;
+    visibility:hidden;
+}
+
+.loader{
+    width:60px;
+    height:60px;
+    border:4px solid rgba(71,247,176,.2);
+    border-top:4px solid #47f7b0;
+    border-radius:50%;
+    animation:spin 1s linear infinite;
+}
+
+/* ================= NAVBAR ================= */
+
+.navbar{
+    display:flex;
+    justify-content:space-between;
+    align-items:center;
+    padding:1rem 3rem;
+    background:rgba(15,25,40,.9);
+    border-bottom:1px solid #1e2d46;
+    position:relative;
+    animation:slideDown .8s ease-out;
+}
+
+.logo{
+    display:flex;
+    align-items:center;
+    gap:8px;
+    font-weight:700;
+    font-size:1.3rem;
+    color:#4cffc0;
+}
+
+.logo img{
+    width:26px;
+    height:26px;
+    /* animation:logoFloat 4s ease-in-out infinite; */
+    /* filter:brightness(0) saturate(100%) invert(67%) sepia(88%) saturate(334%) hue-rotate(92deg) brightness(101%) contrast(90%); */
+}
+
+.nav-links{
+    display:flex;
+    gap:1.5rem;
+}
+
+.nav-links a{
+    color:#b7c8d6;
+    text-decoration:none;
+    font-weight:500;
+    transition:.3s;
+}
+
+.nav-links a:hover{
+    color:#4cffc0;
+}
+
+.profile .circle{
+    background:#2b3c56;
+    width:35px;
+    height:35px;
+    border-radius:50%;
+    display:flex;
+    justify-content:center;
+    align-items:center;
+    font-weight:600;
+}
+
+.menu-toggle{
+    display:none;
+    font-size:1.8rem;
+    cursor:pointer;
+    color:#4cffc0;
+}
+
+/* ================= HERO ================= */
+
+.container{
+    display:flex;
+    justify-content:space-between;
+    align-items:center;
+    padding:5rem 7%;
+    gap:2rem;
+}
+
+.content{
+    max-width:50%;
+    animation:fadeUp 1s ease-out;
+}
+
+.tagline{
+    color:#47f7b0;
+    font-weight:600;
+    letter-spacing:1px;
+    margin-bottom:1rem;
+}
+
+h1{
+    font-size:3rem;
+    line-height:1.2;
+    margin-bottom:1rem;
+}
+
+h1 span{
+    color:#47f7b0;
+}
+
+.desc{
+    color:#a8b4c3;
+    line-height:1.6;
+    margin-bottom:2rem;
+}
+
+.buttons{
+    display:flex;
+    gap:1rem;
+}
+
+.start{
+    background:#36e3a8;
+    color:#000;
+    border:none;
+    padding:.9rem 1.8rem;
+    border-radius:8px;
+    font-weight:600;
+    cursor:pointer;
+    transition:.35s;
+}
+
+.start:hover{
+    transform:translateY(-4px);
+    box-shadow:0 10px 20px rgba(71,247,176,.25);
+}
+
+/* ================= DASHBOARD ================= */
+
+.dashboard{
+    flex:1;
+    display:flex;
+    justify-content:center;
+    animation:fadeLeft 1.2s ease-out;
+}
+
+.card{
+    background:rgba(20,33,52,.9);
+    padding:2rem;
+    border-radius:16px;
+    width:350px;
+    box-shadow:0 0 20px rgba(0,0,0,.2);
+}
+
+.card h3{
+    display:flex;
+    align-items:center;
+    gap:10px;
+    margin-bottom:.5rem;
+}
+
+.card h3 img{
+    width:20px;
+    height:20px;
+    filter:brightness(0) saturate(100%) invert(67%) sepia(88%) saturate(334%) hue-rotate(92deg) brightness(101%) contrast(90%);
+}
+
+.date{
+    color:#4cffc0;
+    margin-bottom:1rem;
+}
+
+.progress{
+    margin-bottom:1.5rem;
+}
+
+.label{
+    display:flex;
+    justify-content:space-between;
+    margin-bottom:.3rem;
+    font-size:.9rem;
+}
+
+.bar{
+    background:#2a3a56;
+    height:8px;
+    border-radius:10px;
+    overflow:hidden;
+    margin-bottom:.8rem;
+}
+
+.fill{
+    background:#47f7b0;
+    height:100%;
+    border-radius:10px;
+    animation:growBar 2s ease;
+}
+
+.fill.average{
+    background:#3ba3f7;
+}
+
+.stats{
+    display:grid;
+    grid-template-columns:repeat(2,1fr);
+    gap:1rem;
+}
+
+.box{
+    background:#182538;
+    padding:1rem;
+    border-radius:10px;
+    text-align:center;
+    opacity:0;
+    animation:popUp .8s ease forwards;
+}
+
+.box:nth-child(1){animation-delay:.2s;}
+.box:nth-child(2){animation-delay:.4s;}
+.box:nth-child(3){animation-delay:.6s;}
+.box:nth-child(4){animation-delay:.8s;}
+
+.box h4{
+    color:#a8b4c3;
+    margin-bottom:.5rem;
+}
+
+/* ================= SECTIONS ================= */
+
+.fade-element{
+    opacity:0;
+    transform:translateY(40px);
+    transition:opacity 1s ease,transform 1s ease;
+}
+
+.fade-visible{
+    opacity:1;
+    transform:translateY(0);
+}
+
+.section{
+    padding:5rem 10%;
+    background:rgba(15,25,40,.95);
+    text-align:center;
+}
+
+.section.hidden{
+    display:none;
+}
+
+.section-title{
+    font-size:2.2rem;
+    color:#47f7b0;
+    margin-bottom:2rem;
+}
+
+.section-title::after{
+    content:"";
+    display:block;
+    width:60px;
+    height:3px;
+    background:#47f7b0;
+    margin:.5rem auto;
+}
+
+.about-container{
+    max-width:800px;
+    margin:auto;
+    color:#b7c8d6;
+    line-height:1.8;
+}
+
+.features-container{
+    display:flex;
+    flex-wrap:wrap;
+    justify-content:center;
+    gap:1.5rem;
+}
+
+.feature-card{
+    width:220px;
+    background:#182538;
+    border-radius:12px;
+    padding:1.5rem;
+    transition:.35s;
+}
+
+.feature-card:hover{
+    transform:translateY(-10px);
+    box-shadow:0 10px 25px rgba(71,247,176,.15);
+}
+
+.feature-card h3{
+    color:#47f7b0;
+    margin-bottom:.6rem;
+}
+
+.feature-card p{
+    color:#a8b4c3;
+    font-size:.9rem;
+}
+
+/* ================= FOOTER ================= */
+
+.footer{
+    text-align:center;
+    padding:1rem;
+    font-size:.85rem;
+    color:#a8b4c3;
+    background:rgba(15,25,40,.9);
+    border-top:1px solid #1e2d46;
+    animation:fadeIn 1.5s ease;
+}
+
+/* ================= RESPONSIVE ================= */
+
+@media(max-width:992px){
+
+    .container{
+        flex-direction:column;
+        text-align:center;
+    }
+
+    .content{
+        max-width:90%;
+    }
+
+    .nav-links{
+        display:none;
+    }
+
+    .menu-toggle{
+        display:block;
+    }
+
+    .nav-links.active{
+        display:flex;
+        flex-direction:column;
+        position:absolute;
+        top:70px;
+        right:0;
+        width:100%;
+        background:rgba(15,25,40,.98);
+        padding:1rem 0;
+    }
+}
+
+@media(max-width:768px){
+
+    .features-container{
+        flex-direction:column;
+        align-items:center;
+    }
+
+    .feature-card{
+        width:85%;
+    }
+}
+
+@media(max-width:600px){
+
+    h1{
+        font-size:2.2rem;
+    }
+
+    .buttons{
+        flex-direction:column;
+    }
+
+    .card{
+        width:100%;
+    }
+
+    .navbar{
+        padding:1rem 1.5rem;
+    }
+}
+
+/* ================= KEYFRAMES ================= */
+
+@keyframes spin{
+    to{
+        transform:rotate(360deg);
+    }
+}
+
+@keyframes slideDown{
+    from{opacity:0;transform:translateY(-40px);}
+    to{opacity:1;transform:translateY(0);}
+}
+
+@keyframes fadeUp{
+    from{opacity:0;transform:translateY(40px);}
+    to{opacity:1;transform:translateY(0);}
+}
+
+@keyframes fadeLeft{
+    from{opacity:0;transform:translateX(60px);}
+    to{opacity:1;transform:translateX(0);}
+}
+
+@keyframes fadeIn{
+    from{opacity:0;}
+    to{opacity:1;}
+}
+
+@keyframes logoFloat{
+    0%,100%{transform:translateY(0);}
+    50%{transform:translateY(-6px);}
+}
+
+@keyframes popUp{
+    from{
+        opacity:0;
+        transform:scale(.85);
+    }
+    to{
+        opacity:1;
+        transform:scale(1);
+    }
+}
+
+@keyframes growBar{
+    from{width:0;}
+}
+
+</style>
 </head>
 <body>
-  <header class="navbar">
+
+<!-- PRELOADER -->
+<div class="preloader" id="preloader">
+    <div class="loader"></div>
+</div>
+
+<!-- KEEP THE REST OF YOUR EXISTING BODY HTML EXACTLY THE SAME -->
+
+<header class="navbar">
     <div class="logo">
-      <img src="https://cdn-icons-png.flaticon.com/512/616/616408.png" alt="Carbo Logo">
-      <span>Catalyst</span>
-      <a href="/" class="btn" style="color: #36d399;">Logout</a>
+      <img src="{% static 'images/Logo.png' %}" alt="Catalyst Logo">
+      <span>EvolveX</span>
+      <a href="/" class="btn" style="color: #36d399;">Main</a>
     </div>
     <nav class="nav-links">
       <a href="/home">Home</a>
@@ -23,9 +494,9 @@
       <a href="/simulate_ml_run">Software/ML Tracker</a>
       <a href="/dashboard">Dashboard</a>
     </nav>
-    <div class="profile">
+    <!-- <div class="profile">
       <div class="circle">F</div>
-    </div>
+    </div> -->
     <div class="menu-toggle">&#9776;</div>
   </header>
 
@@ -57,6 +528,8 @@
           <div class="bar"><div class="fill average" style="width: 60%;"></div></div>
         </div>
 
+        
+
         <div class="stats">
           <div class="box">
             <h4>Transport</h4>
@@ -82,10 +555,10 @@
 
   <!-- =================== ABOUT SECTION =================== -->
 <section id="about" class="fade-element section hidden">
-  <h2 class="section-title">About Catalyst</h2>
+  <h2 class="section-title">About Platform</h2>
   <div class="about-container">
     <p>
-      Catalyst helps individuals and organizations track, reduce, and analyze their carbon footprint in real time. 
+      EvolveX helps individuals and organizations track, reduce, and analyze their carbon footprint in real time. 
       Our mission is to empower everyone with data-driven insights to make eco-friendly decisions that contribute to 
       a more sustainable future.
     </p>
@@ -125,87 +598,160 @@
 
 
     <footer class="footer">
-    <p>© 2026 Catalyst. Track • Reduce • Improve.</p>
+    <p>© 2026 EvolveX. Track • Reduce • Improve.</p>
   </footer>
 
-  <script>
-    // Toggle mobile menu
-    const toggle = document.querySelector(".menu-toggle");
-    const nav = document.querySelector(".nav-links");
-    toggle.addEventListener("click", () => {
-      nav.classList.toggle("active");
-    });
-    const fadeElements = document.querySelectorAll(".fade-element");
 
-  function handleFadeIn() {
-    const trigger = window.innerHeight * 0.85;
-    fadeElements.forEach(el => {
-      const top = el.getBoundingClientRect().top;
-      if (top < trigger) el.classList.add("fade-visible");
-    });
-  }
+<!-- IMPORTANT CHANGE INSIDE PROGRESS BARS -->
 
-  window.addEventListener("scroll", handleFadeIn);
-  window.addEventListener("load", handleFadeIn);
 
-// Dashboard summary 
-document.addEventListener("DOMContentLoaded", async () => {
-  try {
-    const res = await fetch("/api/dashboard-data/");
-    const data = await res.json();
 
-    const userTotal = data.latest_total || 0;
-    const avgTotal = data.avg_total || 0;
+<script>
 
-    document.getElementById("userFootprint").textContent = userTotal.toFixed(1) + " kg CO₂";
-    document.getElementById("avgFootprint").textContent = avgTotal.toFixed(1) + " kg CO₂";
+/* PRELOADER */
 
-    // Scale bars proportionally (to the larger of the two)
-    const max = Math.max(userTotal, avgTotal, 1);
-    const userPercent = (userTotal / max) * 100;
-    const avgPercent = (avgTotal / max) * 100;
-
-    document.getElementById("userBar").style.width = userPercent + "%";
-    document.getElementById("avgBar").style.width = avgPercent + "%";
-  } catch (error) {
-    console.error("Error fetching dashboard data:", error);
-  }
+window.addEventListener("load",()=>{
+    setTimeout(()=>{
+        document.getElementById("preloader").classList.add("hide");
+    },500);
 });
 
-// ---------------- Section Visibility Handler ----------------
-const sections = document.querySelectorAll(".section");
-const navLinks = document.querySelectorAll(".nav-links a");
+/* MOBILE MENU */
 
-function showSection(id) {
-  sections.forEach((sec) => {
-    if ("#" + sec.id === id) {
-      sec.classList.remove("hidden");
-      setTimeout(() => sec.classList.add("fade-visible"), 100);
-      window.scrollTo({ top: sec.offsetTop - 70, behavior: "smooth" });
-    } else {
-      sec.classList.remove("fade-visible");
-      setTimeout(() => sec.classList.add("hidden"), 500);
-    }
-  });
+const toggle=document.querySelector(".menu-toggle");
+const nav=document.querySelector(".nav-links");
+
+toggle.addEventListener("click",()=>{
+    nav.classList.toggle("active");
+});
+
+/* FADE SECTIONS */
+
+const fadeElements=document.querySelectorAll(".fade-element");
+
+function handleFadeIn(){
+    const trigger=window.innerHeight*0.85;
+
+    fadeElements.forEach(el=>{
+        const top=el.getBoundingClientRect().top;
+
+        if(top<trigger){
+            el.classList.add("fade-visible");
+        }
+    });
 }
 
-navLinks.forEach((link) => {
-  link.addEventListener("click", (e) => {
-    const target = e.target.getAttribute("href");
-    if (target.startsWith("#")) {
-      e.preventDefault();
-      showSection(target);
+window.addEventListener("scroll",handleFadeIn);
+window.addEventListener("load",handleFadeIn);
+
+/* DASHBOARD API */
+
+document.addEventListener("DOMContentLoaded",async()=>{
+
+    try{
+
+        const res=await fetch("/api/dashboard-data/");
+        const data=await res.json();
+
+        const userTotal=data.latest_total || 0;
+        const avgTotal=data.avg_total || 0;
+
+        document.getElementById("userFootprint").textContent =
+            userTotal.toFixed(1)+" kg CO₂";
+
+        document.getElementById("avgFootprint").textContent =
+            avgTotal.toFixed(1)+" kg CO₂";
+
+        const max=Math.max(userTotal,avgTotal,1);
+
+        document.getElementById("userBar").style.width =
+            ((userTotal/max)*100)+"%";
+
+        document.getElementById("avgBar").style.width =
+            ((avgTotal/max)*100)+"%";
+
+    }catch(err){
+        console.error(err);
     }
-  });
 });
 
-// Initialize: show home only (hide about/features)
-document.addEventListener("DOMContentLoaded", () => {
-  sections.forEach(sec => sec.classList.add("hidden"));
+/* SECTION TOGGLE */
+
+const sections=document.querySelectorAll(".section");
+const navLinks=document.querySelectorAll(".nav-links a");
+
+function showSection(id){
+
+    sections.forEach(sec=>{
+
+        if("#"+sec.id===id){
+
+            sec.classList.remove("hidden");
+
+            setTimeout(()=>{
+                sec.classList.add("fade-visible");
+            },100);
+
+            window.scrollTo({
+                top:sec.offsetTop-70,
+                behavior:"smooth"
+            });
+
+        }else{
+
+            sec.classList.remove("fade-visible");
+
+            setTimeout(()=>{
+                sec.classList.add("hidden");
+            },500);
+        }
+    });
+}
+
+navLinks.forEach(link=>{
+
+    link.addEventListener("click",e=>{
+
+        const target=e.target.getAttribute("href");
+
+        if(target.startsWith("#")){
+
+            e.preventDefault();
+            showSection(target);
+        }
+    });
 });
 
+document.addEventListener("DOMContentLoaded",()=>{
 
-    
-  </script>
+    sections.forEach(sec=>{
+        sec.classList.add("hidden");
+    });
+});
+
+/* INTERSECTION REVEAL */
+
+const revealElements=document.querySelectorAll(
+'.feature-card,.about-container,.box'
+);
+
+const revealObserver=new IntersectionObserver(
+(entries)=>{
+
+    entries.forEach(entry=>{
+
+        if(entry.isIntersecting){
+            entry.target.classList.add("show");
+        }
+    });
+
+},{threshold:.15});
+
+revealElements.forEach(el=>{
+    revealObserver.observe(el);
+});
+
+</script>
+
 </body>
 </html>
