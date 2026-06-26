@@ -76,7 +76,7 @@ Evolve-X/
 
 ```bash
 git clone https://github.com/adityatomar29/EvolveX.git
-cd evolve-x
+cd eco_metric
 ```
 
 ### 2. Create a Virtual Environment
