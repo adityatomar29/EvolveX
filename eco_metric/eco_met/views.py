@@ -62,7 +62,7 @@ def auth(request):
     return render(request, 'login.html')
 
 
-@login_required(login_url='login')
+# @login_required(login_url='login')
 def home(request):
     return render(request, 'home.html')
 
