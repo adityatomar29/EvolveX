@@ -25,9 +25,9 @@ BASE_DIR = Path(__file__).resolve().parent.parent
 SECRET_KEY = 'django-insecure-nk6ji^$pzk0+2941&hogt3ji&ax2%#h$1tujw!h6tt$m82w7&d'
 
 # SECURITY WARNING: don't run with debug turned on in production!
-DEBUG = True
+DEBUG = False
 
-ALLOWED_HOSTS = []
+ALLOWED_HOSTS = ['adit29.pythonanywhere.com']
 
 
 # Application definition
@@ -132,6 +132,9 @@ STATIC_URL = 'static/'
 # STATICFILES_DIRS = [
 #     BASE_DIR / "eco_met" / "static",
 # ]
+
+STATIC_ROOT = '/home/adit29/static'
+
 
 
 # output_dir = os.path.join(BASE_DIR, 'codecarbon_logs')
